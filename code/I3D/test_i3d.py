@@ -266,7 +266,8 @@ if __name__ == '__main__':
     num_classes = 2000
     save_model = './checkpoints/'
 
-    root = '../../data/WLASL2000'
+    root = '/content/drive/MyDrive/Spring_2021/ENEE408G/ASL_Project/aug/aug_videos_quality'
+
 
     train_split = 'preprocess/nslt_{}.json'.format(num_classes)
     weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
