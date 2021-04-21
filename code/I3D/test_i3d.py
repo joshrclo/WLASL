@@ -22,12 +22,7 @@ import cv2
 
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = '0'
-parser = argparse.ArgumentParser()
-parser.add_argument('-mode', type=str, help='rgb or flow')
-parser.add_argument('-save_model', type=str)
-parser.add_argument('-root', type=str)
 
-args = parser.parse_args()
 
 
 def load_rgb_frames_from_video(video_path, start=0, num=-1):
@@ -261,7 +256,13 @@ def get_slide_windows(frames, window_size, stride=1):
 
 if __name__ == '__main__':
     # ================== test i3d on a dataset ==============
-    # need to add argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-mode', type=str, help='rgb or flow')
+    parser.add_argument('-save_model', type=str)
+    parser.add_argument('-root', type=str)
+
+    args = parser.parse_args()
+    
     mode = 'rgb'
     num_classes = 2000
     save_model = './checkpoints/'
