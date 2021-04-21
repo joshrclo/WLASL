@@ -115,6 +115,8 @@ python test_i3d.py
 ```
 By default the script tests WLASL2000. To test other subsets, please change line 264, 270 in ```test_i3d.py``` properly.
 
+NOTE: archived and weights should be put in code/I3D
+
 A previous release can be found [here](https://drive.google.com/file/d/1vktQxvRHNS9psOQVKx5-dsERlmiYFRXC/view).
 
 
