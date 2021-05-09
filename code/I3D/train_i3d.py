@@ -42,6 +42,7 @@ def run(configs,
         root='/ssd/Charades_v1_rgb',
         train_split='charades/charades.json',
         save_model='',
+        num_classes=2000,
         weights=None):
     print(configs)
 
@@ -201,4 +202,4 @@ if __name__ == '__main__':
 
     configs = Config(config_file)
     print(root, train_split)
-    run(configs=configs, mode=mode, root=root, save_model=save_model, train_split=train_split, weights=weights)
+    run(configs=configs, mode=mode, root=root, save_model=save_model, train_split=train_split, weights=weights, num_classes=2000)
