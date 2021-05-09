@@ -202,13 +202,9 @@ if __name__ == '__main__':
     print("num_classes", num_classes)
     save_model = './checkpoints/'
 
-    
-    root = args.root
-
-
     train_split = 'preprocess/nslt_{}.json'.format(num_classes)
         
-#     root = {'word': '../../data/'}
+    root = {'word': args.root}
 
 #     train_split = './preprocess/nslt_aug.json'
 
