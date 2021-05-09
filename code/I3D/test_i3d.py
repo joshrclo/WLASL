@@ -125,9 +125,27 @@ def run(init_lr=0.1,
               float(correct_10) / len(dataloaders["test"]))
 
         # per-class accuracy
-    top1_per_class = np.mean(top1_tp / (top1_tp + top1_fp))
-    top5_per_class = np.mean(top5_tp / (top5_tp + top5_fp))
-    top10_per_class = np.mean(top10_tp / (top10_tp + top10_fp))
+    tested1 = []    
+    top1_p = (top1_tp + top1_fp)
+    for i in range(len(top1_p)):
+        if top1_p[i] > 0:
+            tested1.append(i)
+    
+    tested5 = []    
+    top5_p = (top5_tp + top5_fp)
+    for i in range(len(top5_p)):
+        if top5_p[i] > 0:
+            tested5.append(i)
+    
+    tested10 = []    
+    top10_p = (top10_tp + top10_fp)
+    for i in range(len(top10_p)):
+        if top10_p[i] > 0:
+            tested10.append(i)
+    
+    top1_per_class = np.mean(top1_tp[np.array(tested1)] / top1_p[np.array(tested1)])
+    top5_per_class = np.mean(top5_tp[np.array(tested5)] / top5_p[np.array(tested5)])
+    top10_per_class = np.mean(top10_tp[np.array(tested10)] / top10_p[np.array(tested10)])
     print('top-k average per class acc: {}, {}, {}'.format(top1_per_class, top5_per_class, top10_per_class))
 
 
