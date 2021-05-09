@@ -56,6 +56,7 @@ def run(init_lr=0.1,
         train_split='charades/charades.json',
         batch_size=3 * 15,
         save_model='',
+        num_classes=2000,
         weights=None):
     # setup dataset
     test_transforms = transforms.Compose([videotransforms.CenterCrop(224)])
@@ -274,4 +275,4 @@ if __name__ == '__main__':
     train_split = 'preprocess/nslt_{}.json'.format(num_classes)
     weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
 
-    run(mode=mode, root=root, save_model=save_model, train_split=train_split, weights=weights)
+    run(mode=mode, root=root, save_model=save_model, train_split=train_split, weights=weights, num_classes=num_classes)
