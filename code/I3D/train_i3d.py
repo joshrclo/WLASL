@@ -202,4 +202,4 @@ if __name__ == '__main__':
 
     configs = Config(config_file)
     print(root, train_split)
-    run(configs=configs, mode=mode, root=root, save_model=save_model, train_split=train_split, weights=weights, num_classes=2000)
+    run(configs=configs, mode=mode, root=root, save_model=save_model, train_split=train_split, num_classes=2000, weights=weights)
