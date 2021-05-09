@@ -95,6 +95,8 @@ def run(init_lr=0.1,
     top10_fp = np.zeros(num_classes, dtype=np.int)
     top10_tp = np.zeros(num_classes, dtype=np.int)
 
+    print("Number of test data: {}".format(len(dataloaders["test"])))
+    
     for data in dataloaders["test"]:
         inputs, labels, video_id = data  # inputs: b, c, t, h, w
 
