@@ -99,7 +99,7 @@ def make_dataset(split_file, split, root, mode, num_classes):
         if mode == 'flow':
             num_frames = num_frames // 2
         
-        print(num_frames)
+        print(num_classes, num_frames, type(num_classes), type(num_frames))
         
         label = np.zeros((num_classes, num_frames), np.float32)
 
