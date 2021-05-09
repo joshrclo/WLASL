@@ -43,7 +43,8 @@ def run(configs,
         train_split='charades/charades.json',
         save_model='',
         num_classes=2000,
-        weights=None):
+        weights=None, 
+        num_epochs=100):
     print(configs)
 
     # setup dataset
@@ -87,11 +88,11 @@ def run(configs,
     num_steps_per_update = configs.update_per_step  # accum gradient
     steps = 0
     epoch = 0
-
+        
     best_val_score = 0
     # train it
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=5, factor=0.3)
-    while steps < configs.max_steps and epoch < 400:  # for epoch in range(num_epochs):
+    while steps < configs.max_steps and epoch < num_epochs:  # for epoch in range(num_epochs):
         print('Step {}/{}'.format(steps, configs.max_steps))
         print('-' * 10)
 
@@ -192,7 +193,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-mode', type=str, help='rgb or flow')
     parser.add_argument('-save_model', type=str)
-    parser.add_argument('-num_classes', type=str, default=2000)
+    parser.add_argument('-num_classes', type=int, default=2000)
     parser.add_argument('-root', type=str)
 
     args = parser.parse_args()
