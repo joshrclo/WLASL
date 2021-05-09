@@ -152,8 +152,8 @@ def get_num_class(split_file):
 
 class NSLT(data_utl.Dataset):
 
-    def __init__(self, split_file, split, root, mode, num_classes=2000, transforms=None):
-        self.num_classes = num_classes
+    def __init__(self, split_file, split, root, mode, transforms=None):
+        self.num_classes = get_num_class(split_file)
 
         self.data = make_dataset(split_file, split, root, mode, num_classes=self.num_classes)
         self.split_file = split_file
