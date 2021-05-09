@@ -60,8 +60,6 @@ def run(init_lr=0.1,
         weights=None):
     # setup dataset
     test_transforms = transforms.Compose([videotransforms.CenterCrop(224)])
-
-    print("samples in root {}: {}".format(root, len(os.listdir(os.path.join(root, 'test')))))
     
     val_dataset = Dataset(train_split, 'test', root, mode, test_transforms)
     val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=1,
