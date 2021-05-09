@@ -1,4 +1,5 @@
 import os
+from os.path import join, exists
 import argparse
 
 import torch
@@ -19,16 +20,13 @@ from pytorch_i3d import InceptionI3d
 # from datasets.nslt_dataset import NSLT as Dataset
 from datasets.nslt_dataset import NSLT as Dataset
 
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = '0'
+print(torch.cuda.get_device_name())
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-mode', type=str, help='rgb or flow')
+parser.add_argument('-mode', type=str, default='rgb', help='rgb or flow')
 parser.add_argument('-save_model', type=str)
-parser.add_argument('-root', type=str)
-parser.add_argument('--num_class', type=int)
-
-args = parser.parse_args()
+parser.add_argument('-data_path', type=str)
+parser.add_argument('-k', type=int, default=100)
 
 torch.manual_seed(0)
 np.random.seed(0)
@@ -42,9 +40,7 @@ def run(configs,
         root='/ssd/Charades_v1_rgb',
         train_split='charades/charades.json',
         save_model='',
-        num_classes=2000,
-        weights=None, 
-        num_epochs=100):
+        weights=None):
     print(configs)
 
     # setup dataset
@@ -52,11 +48,11 @@ def run(configs,
                                            videotransforms.RandomHorizontalFlip(), ])
     test_transforms = transforms.Compose([videotransforms.CenterCrop(224)])
 
-    dataset = Dataset(train_split, 'train', root, mode, num_classes, train_transforms)
+    dataset = Dataset(train_split, 'train', root, mode, train_transforms)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=configs.batch_size, shuffle=True, num_workers=0,
                                              pin_memory=True)
 
-    val_dataset = Dataset(train_split, 'test', root, mode, num_classes, test_transforms)
+    val_dataset = Dataset(train_split, 'test', root, mode, test_transforms)
     val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=configs.batch_size, shuffle=True, num_workers=2,
                                                  pin_memory=False)
 
@@ -88,11 +84,11 @@ def run(configs,
     num_steps_per_update = configs.update_per_step  # accum gradient
     steps = 0
     epoch = 0
-        
+
     best_val_score = 0
     # train it
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min', patience=5, factor=0.3)
-    while steps < configs.max_steps and epoch < num_epochs:  # for epoch in range(num_epochs):
+    while steps < configs.max_steps and epoch < 400:  # for epoch in range(num_epochs):
         print('Step {}/{}'.format(steps, configs.max_steps))
         print('-' * 10)
 
@@ -190,29 +186,21 @@ def run(configs,
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-mode', type=str, help='rgb or flow')
-    parser.add_argument('-save_model', type=str)
-    parser.add_argument('-num_classes', type=int, default=2000)
-    parser.add_argument('-root', type=str)
-
+    # WLASL setting
     args = parser.parse_args()
     
-    mode = 'rgb'
-    num_classes = args.num_classes
-    print("num_classes", num_classes)
-    save_model = './checkpoints/'
+    assert args.k in [100, 300, 1000, 2000]
 
-    train_split = 'preprocess/nslt_{}.json'.format(num_classes)
-        
-    root = {'word': args.root}
+    assert exists(args.data_path)
 
-#     train_split = './preprocess/nslt_aug.json'
+    root = {'word': args.data_path}
 
-    weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
-#     weights = None
-    config_file = 'configfiles/asl2000.ini'
+    train_split = f'./preprocess/nslt_{args.k}.json'
+
+    # weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
+    weights = None
+    config_file = f'./configfiles/asl{args.k}.ini'
 
     configs = Config(config_file)
     print(root, train_split)
-    run(configs=configs, mode=mode, root=root, save_model=save_model, train_split=train_split, num_classes=2000, weights=weights)
+    run(configs=configs, mode=args.mode, root=root, save_model=args.save_model, train_split=train_split, weights=weights)
