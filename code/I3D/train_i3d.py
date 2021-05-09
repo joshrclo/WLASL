@@ -192,8 +192,8 @@ if __name__ == '__main__':
     mode = 'rgb'
     root = {'word': '../../data/WLASL2000'}
 
-    save_model = 'checkpoints/'
-    train_split = 'preprocess/nslt_2000.json'
+    save_model = './checkpoints/'
+    train_split = './preprocess/nslt_aug.json'
 
     # weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
     weights = None
