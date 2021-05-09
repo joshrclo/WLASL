@@ -264,7 +264,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-mode', type=str, help='rgb or flow')
     parser.add_argument('-save_model', type=str)
-    parser.add_argument('-num_classes', type=str, default=100)
+    parser.add_argument('-num_classes', type=str, default=2000)
     parser.add_argument('-root', type=str)
 
     args = parser.parse_args()
