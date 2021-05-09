@@ -271,6 +271,7 @@ if __name__ == '__main__':
     
     mode = 'rgb'
     num_classes = args.num_classes
+    print("num_classes", num_classes)
     save_model = './checkpoints/'
 
     
