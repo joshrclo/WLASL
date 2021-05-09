@@ -61,6 +61,8 @@ def run(init_lr=0.1,
     # setup dataset
     test_transforms = transforms.Compose([videotransforms.CenterCrop(224)])
 
+    print("samples in root {}: {}".format(root, len(os.listdir(root))))
+    
     val_dataset = Dataset(train_split, 'test', root, mode, test_transforms)
     val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=1,
                                                  shuffle=False, num_workers=2,
@@ -95,9 +97,9 @@ def run(init_lr=0.1,
     top10_fp = np.zeros(num_classes, dtype=np.int)
     top10_tp = np.zeros(num_classes, dtype=np.int)
 
-    print("Number of test data: {}".format(len(dataloaders["test"])))
+    print("Number of test data: {}".format(len(dataloaders['test'])))
     
-    for data in dataloaders["test"]:
+    for data in dataloaders['test']:
         inputs, labels, video_id = data  # inputs: b, c, t, h, w
 
         per_frame_logits = i3d(inputs)
