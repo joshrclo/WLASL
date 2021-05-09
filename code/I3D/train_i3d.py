@@ -191,7 +191,7 @@ def run(configs,
 if __name__ == '__main__':
     # WLASL setting
     mode = 'rgb'
-    root = {'word': '../../data/WLASL2000'}
+    root = {'word': '../../data/'}
 
     save_model = './checkpoints/'
     train_split = './preprocess/nslt_aug.json'
