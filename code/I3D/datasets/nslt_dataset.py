@@ -121,7 +121,7 @@ def make_dataset(split_file, split, root, mode, num_classes):
             count_skipping += 1
             continue
 
-        label = np.zeros((num_classes, num_frames), np.float32)
+        label = np.zeros((num_classes, num_frames), dtype=np.float32)
 
         for l in range(num_frames):
             c_ = data[vid]['action'][0]
