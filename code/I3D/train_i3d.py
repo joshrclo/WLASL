@@ -55,7 +55,7 @@ def run(configs,
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=configs.batch_size, shuffle=True, num_workers=0,
                                              pin_memory=True)
 
-    val_dataset = Dataset(train_split, 'test', root, mode, test_transforms)
+    val_dataset = Dataset(train_split, 'test', root, mode, num_classes, test_transforms)
     val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=configs.batch_size, shuffle=True, num_workers=2,
                                                  pin_memory=False)
 
@@ -189,15 +189,31 @@ def run(configs,
 
 
 if __name__ == '__main__':
-    # WLASL setting
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-mode', type=str, help='rgb or flow')
+    parser.add_argument('-save_model', type=str)
+    parser.add_argument('-num_classes', type=str, default=2000)
+    parser.add_argument('-root', type=str)
+
+    args = parser.parse_args()
+    
     mode = 'rgb'
-    root = {'word': '../../data/'}
-
+    num_classes = args.num_classes
+    print("num_classes", num_classes)
     save_model = './checkpoints/'
-    train_split = './preprocess/nslt_aug.json'
 
-    # weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
-    weights = None
+    
+    root = args.root
+
+
+    train_split = 'preprocess/nslt_{}.json'.format(num_classes)
+        
+#     root = {'word': '../../data/'}
+
+#     train_split = './preprocess/nslt_aug.json'
+
+    weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
+#     weights = None
     config_file = 'configfiles/asl2000.ini'
 
     configs = Config(config_file)
