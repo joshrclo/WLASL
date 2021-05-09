@@ -123,7 +123,7 @@ def run(init_lr=0.1,
             top1_fp[labels[0].item()] += 1
 #         print(video_id, float(correct) / len(dataloaders["test"]), float(correct_5) / len(dataloaders["test"]),
 #               float(correct_10) / len(dataloaders["test"]))
-    print('top 1', float(correct) / len(dataloaders["test"]), 'top 15', float(correct_5) / len(dataloaders["test"]),
+    print('top 1', float(correct) / len(dataloaders["test"]), 'top 5', float(correct_5) / len(dataloaders["test"]),
               'top 10', float(correct_10) / len(dataloaders["test"]))
     
         # per-class accuracy
