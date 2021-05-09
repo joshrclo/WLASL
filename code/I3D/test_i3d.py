@@ -121,9 +121,11 @@ def run(init_lr=0.1,
             top1_tp[labels[0].item()] += 1
         else:
             top1_fp[labels[0].item()] += 1
-        print(video_id, float(correct) / len(dataloaders["test"]), float(correct_5) / len(dataloaders["test"]),
-              float(correct_10) / len(dataloaders["test"]))
-
+#         print(video_id, float(correct) / len(dataloaders["test"]), float(correct_5) / len(dataloaders["test"]),
+#               float(correct_10) / len(dataloaders["test"]))
+    print('top 1', float(correct) / len(dataloaders["test"]), 'top 15', float(correct_5) / len(dataloaders["test"]),
+              'top 10', float(correct_10) / len(dataloaders["test"]))
+    
         # per-class accuracy
     tested1 = []    
     top1_p = (top1_tp + top1_fp)
