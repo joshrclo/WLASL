@@ -98,7 +98,9 @@ def make_dataset(split_file, split, root, mode, num_classes):
         num_frames = int(cv2.VideoCapture(video_path).get(cv2.CAP_PROP_FRAME_COUNT))
         if mode == 'flow':
             num_frames = num_frames // 2
-
+        
+        print(num_frames)
+        
         label = np.zeros((num_classes, num_frames), np.float32)
 
         # dataset.append((vid, data[vid]['action'][0], data[vid]['action'][1], data[vid]['action'][2], "{}".format(vid)))
