@@ -120,7 +120,8 @@ def make_dataset(split_file, split, root, mode, num_classes):
             print("Skip video ", vid)
             count_skipping += 1
             continue
-
+        
+        print(type(num_classes),type(num_frames))
         label = np.zeros((num_classes, num_frames), dtype=np.float32)
 
         for l in range(num_frames):
