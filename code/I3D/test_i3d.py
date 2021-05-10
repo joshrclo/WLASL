@@ -149,6 +149,8 @@ def run(init_lr=0.1,
     top5_per_class = np.mean(top5_tp[np.array(tested5)] / top5_p[np.array(tested5)])
     top10_per_class = np.mean(top10_tp[np.array(tested10)] / top10_p[np.array(tested10)])
     print('top-k average per class acc: {}, {}, {}'.format(top1_per_class, top5_per_class, top10_per_class))
+    
+    print('Classes in top 10: {}'.format(tested10))
 
 
 def ensemble(mode, root, train_split, weights, num_classes):
