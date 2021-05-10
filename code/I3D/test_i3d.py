@@ -125,6 +125,12 @@ def run(init_lr=0.1,
             
         if len(dataloaders['test']) < 10:
             print("video {}, label {}, top-10 predictions {}".format(video_id, labels[0].item(), np.flip(out_labels[-10:])))
+            
+        del data
+        del per_fram_logits
+        del predictions
+        
+         
 #         print(video_id, float(correct) / len(dataloaders["test"]), float(correct_5) / len(dataloaders["test"]),
 #               float(correct_10) / len(dataloaders["test"]))
     print('top 1', float(correct) / len(dataloaders["test"]), 'top 5', float(correct_5) / len(dataloaders["test"]),
