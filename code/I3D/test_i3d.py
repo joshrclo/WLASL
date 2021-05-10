@@ -14,6 +14,7 @@ import numpy as np
 
 import torch.nn.functional as F
 from pytorch_i3d import InceptionI3d
+from tqdm import tqdm
 
 # from nslt_dataset_all import NSLT as Dataset
 from datasets.nslt_dataset_all import NSLT as Dataset
@@ -97,7 +98,7 @@ def run(init_lr=0.1,
 
     print("Number of test data: {}".format(len(dataloaders['test'])))
     
-    for data in dataloaders['test']:
+    for data in tqdm(dataloaders['test']):
         inputs, labels, video_id = data  # inputs: b, c, t, h, w
 
         per_frame_logits = i3d(inputs)
