@@ -160,6 +160,9 @@ class NSLT(data_utl.Dataset):
         self.transforms = transforms
         self.mode = mode
         self.root = root
+        self.ret_img = None
+        self.label = None
+        self.vid = None
 
     def __getitem__(self, index):
         """
@@ -179,6 +182,9 @@ class NSLT(data_utl.Dataset):
             start_f = start_frame
 
         imgs = load_rgb_frames_from_video(self.root['word'], vid, start_f, total_frames)
+        
+        if imgs.shape[0] == 0:
+            return self.ret_img, self.label, self.vid
 
         imgs, label = self.pad(imgs, label, total_frames)
 
@@ -186,7 +192,11 @@ class NSLT(data_utl.Dataset):
 
         ret_lab = torch.from_numpy(label)
         ret_img = video_to_tensor(imgs)
-
+        
+        self.ret_img = ret_img
+        self.label = label
+        self.vid = vid
+        
         return ret_img, ret_lab, vid
 
     def __len__(self):
