@@ -101,7 +101,7 @@ def run(init_lr=0.1,
     for data in tqdm(dataloaders['test']):
         inputs, labels, video_id = data  # inputs: b, c, t, h, w
 
-        per_frame_logits = i3d(inputs)
+        per_frame_logits = i3d(inputs, pretrained=True, n_tune_layers=1)
 
         predictions = torch.max(per_frame_logits, dim=2)[0]
         out_labels = np.argsort(predictions.cpu().detach().numpy()[0])
