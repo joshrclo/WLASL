@@ -196,7 +196,7 @@ class NSLT(data_utl.Dataset):
         if imgs.shape[0] < total_frames:
             num_padding = total_frames - imgs.shape[0]
 
-            if num_padding:
+            if num_padding and imgs.shape[0] != 0:
                 prob = np.random.random_sample()
                 if prob > 0.5:
                     pad_img = imgs[0]
