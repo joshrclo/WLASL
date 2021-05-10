@@ -132,6 +132,9 @@ class NSLT(data_utl.Dataset):
         self.transforms = transforms
         self.mode = mode
         self.root = root
+        self.ret_img = None
+        self.label = None
+        self.vid = None
 
     def __getitem__(self, index):
         """
@@ -150,9 +153,17 @@ class NSLT(data_utl.Dataset):
         else:
             imgs = load_flow_frames(self.root, vid, start_f, start_e)
         # label = label[:, start_f:start_e]
-
+        
+        if imgs.shape[0] == 0:
+            return self.ret_img, self.label, self.vid
+        
         imgs = self.transforms(imgs)
         ret_img = video_to_tensor(imgs)
+        
+        self.ret_img = ret_img
+        self.label = label
+        self.vid = vid
+        
         return ret_img, label, vid
 
     def __len__(self):
