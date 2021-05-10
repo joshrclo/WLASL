@@ -127,7 +127,7 @@ def run(init_lr=0.1,
             print("video {}, label {}, top-10 predictions {}".format(video_id, labels[0].item(), np.flip(out_labels[-10:])))
             
         del data
-        del per_fram_logits
+        del per_frame_logits
         del predictions
         
          
