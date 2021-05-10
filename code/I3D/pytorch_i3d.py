@@ -292,6 +292,8 @@ class InceptionI3d(nn.Module):
         end_point = 'Logits'
         self.avg_pool = nn.AvgPool3d(kernel_size=[2, 7, 7],
                                      stride=(1, 1, 1))
+        self.avg_pool1 = nn.AvgPool3d(kernel_size=[1, 7, 7],
+                                     stride=(1, 1, 1))
         self.dropout = nn.Dropout(dropout_keep_prob)
         self.logits  = Unit3D(in_channels=384+384+128+128, output_channels=self._num_classes,
                              kernel_shape=[1, 1, 1],
@@ -341,8 +343,9 @@ class InceptionI3d(nn.Module):
 
         # head
         if x.shape[2] < 2:
-            print(x.shape)
-        x = self.logits(self.dropout(self.avg_pool(x)))
+            x = self.logits(self.dropout(self.avg_pool1(x)))
+        else:
+            x = self.logits(self.dropout(self.avg_pool(x)))
         if self._spatial_squeeze:
             logits = x.squeeze(3).squeeze(3)
         # logits is batch X time X classes, which is what we want to work with
