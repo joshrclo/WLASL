@@ -196,16 +196,19 @@ class NSLT(data_utl.Dataset):
         if imgs.shape[0] < total_frames:
             num_padding = total_frames - imgs.shape[0]
 
-            if num_padding and imgs.shape[0] != 0:
-                prob = np.random.random_sample()
-                if prob > 0.5:
-                    pad_img = imgs[0]
-                    pad = np.tile(np.expand_dims(pad_img, axis=0), (num_padding, 1, 1, 1))
-                    padded_imgs = np.concatenate([imgs, pad], axis=0)
+            if num_padding > 0:
+                if imgs.shape[0] != 0
+                    prob = np.random.random_sample()
+                    if prob > 0.5:
+                        pad_img = imgs[0]
+                        pad = np.tile(np.expand_dims(pad_img, axis=0), (num_padding, 1, 1, 1))
+                        padded_imgs = np.concatenate([imgs, pad], axis=0)
+                    else:
+                        pad_img = imgs[-1]
+                        pad = np.tile(np.expand_dims(pad_img, axis=0), (num_padding, 1, 1, 1))
+                        padded_imgs = np.concatenate([imgs, pad], axis=0)
                 else:
-                    pad_img = imgs[-1]
-                    pad = np.tile(np.expand_dims(pad_img, axis=0), (num_padding, 1, 1, 1))
-                    padded_imgs = np.concatenate([imgs, pad], axis=0)
+                    padded_imgs = pad = np.tile(np.expand_dims(pad_img, axis=0), (total_frames, 1, 1, 1))
         else:
             padded_imgs = imgs
 
