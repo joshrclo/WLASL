@@ -340,7 +340,7 @@ class InceptionI3d(nn.Module):
                 x = self._modules[end_point](x) # use _modules to work with dataparallel
 
         # head
-        if x.shape[2]>2:
+        if x.shape[2] < 2:
             print(x.shape)
         x = self.logits(self.dropout(self.avg_pool(x)))
         if self._spatial_squeeze:
