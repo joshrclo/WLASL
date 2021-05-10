@@ -282,8 +282,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-mode', type=str, help='rgb or flow')
     parser.add_argument('-save_model', type=str)
-    parser.add_argument('-num_classes', type=str, default=2000)
+    parser.add_argument('-num_classes', type=int, default=2000)
     parser.add_argument('-root', type=str)
+    parser.add_argument('-weights', type=str, default='archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt')
 
     args = parser.parse_args()
     
@@ -297,6 +298,6 @@ if __name__ == '__main__':
 
 
     train_split = 'preprocess/nslt_{}.json'.format(num_classes)
-    weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
-
+    weights = args.weights
+    
     run(mode=mode, root=root, save_model=save_model, train_split=train_split, weights=weights, num_classes=num_classes)
