@@ -192,10 +192,15 @@ def run(configs,
 
 if __name__ == '__main__':
     # WLASL setting
-    args = parser.parse_args()
-        
-    args.add_argument('-weights', type=str, default='archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt')
     
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-mode', type=str, default='rgb', help='rgb or flow')
+    parser.add_argument('-save_model', type=str)
+    parser.add_argument('-data_path', type=str)
+    parser.add_argument('-k', type=int, default=100)
+        
+    parser.add_argument('-weights', type=str, default='archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt')
+    args = parser.parse_args()
     assert args.k in [100, 300, 1000, 2000]
 
     assert exists(args.data_path)
