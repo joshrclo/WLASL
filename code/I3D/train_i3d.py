@@ -193,6 +193,8 @@ def run(configs,
 if __name__ == '__main__':
     # WLASL setting
     args = parser.parse_args()
+        
+    args.add_argument('-weights', type=str, default='archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt')
     
     assert args.k in [100, 300, 1000, 2000]
 
@@ -202,7 +204,7 @@ if __name__ == '__main__':
 
     train_split = f'./preprocess/nslt_{args.k}.json'
 
-    weights = 'archived/asl2000/FINAL_nslt_2000_iters=5104_top1=32.48_top5=57.31_top10=66.31.pt'
+    weights = args.weights
 #     weights = None
     config_file = f'./configfiles/asl{args.k}.ini'
 
