@@ -186,6 +186,8 @@ def run(configs,
                         scheduler.step(tot_loss * num_steps_per_update / num_iter)
             except TypeError:
                 continue
+            except AttributeError:
+                continue
                         
 
 if __name__ == '__main__':
